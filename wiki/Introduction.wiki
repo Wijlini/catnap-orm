@@ -46,7 +46,7 @@ using (UnitOfWork.Start())
 Here we will fetch a forum, change its title, remove a post, and add a post then save the forum.  The Posts collection will be loaded lazily.  The adds/deletes to Posts will be cascaded when the forum is saved.  A connection will be opened and closed, and the whole thing will be wrapped in a transaction.
 
 {{{
-using (UnitOfWork.Start)
+using (UnitOfWork.Start())
 {
    var person = personRepository.Get(1);
    var forum = forumRepository.Get(1);
