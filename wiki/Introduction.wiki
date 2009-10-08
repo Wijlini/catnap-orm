@@ -9,9 +9,9 @@
  * Control connection and transaction boundaries via a basic !UnitOfWork context
  * `Repository<T>` base class provides basic operations
  * `IFindSpec<T>` provides means to abstract find queries
- * Database migration utility. Provides automatic deployment of database changes based on migrations (forward only) that you write
  * !DbCommandSpec provides a way to create and execute any parameterized query (similar to IDbCommand)
- * Support for Linq predicates for finding and filtering collections (very limited)
+ * Support for Linq predicates for finding and filtering collections (very limited
+ * Database migration utility. Provides automatic deployment of database changes based on migrations (forward only) that you write)
  * No dependencies except sqlite3.dll
 
 = Configuration =
