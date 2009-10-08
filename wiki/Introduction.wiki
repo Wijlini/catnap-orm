@@ -4,16 +4,17 @@
 
  * Mapping via fluent interface (no attibute based mapping, but could be added)
  * Entities inherit from IEitity interface which exposes one property: int Id
- * Automatic loading of collections, configurable as lazy or eager per collection
+ * Automatic loading of collections, lazy or eager, configurable per collection
  * Cascading deletes and saves, configurable per collection
  * Limited Linq support for finding
- * Basic UnitOfWork capability for session and transaction management
+ * Basic !UnitOfWork capability for session and transaction management
  * {{{Repository<T>}}} base class
  * Database migration feature -- tracks changes and applies updates (forward only)
+ * !DbCommandSpec provides a way to create and execute any parameterized query (similar to !IDbCommand)
 
 = Configuration =
 
-Your startup code might look something like this:
+Something like this at startup:
 
 {{{
 SessionFactory.Initialize("MyDatabase.sqlite");
@@ -41,7 +42,7 @@ DatabaseMigrator.Execute();
 
 == Get & Save ==
 
-Here we will fetch a forum, change the title, remove a post, and add a post then save the forum.  The Posts collection will be loaded lazily, and the adds/deletes will be cascaded when the forum is saved.  A connection will be opened and closed, and the whole thing will be wrapped in a transaction.
+Here we will fetch a forum, change the title, remove a post, and add a post then save the forum.  The Posts collection will be loaded lazily.  The adds/deletes to Posts will be cascaded when the forum is saved.  A connection will be opened and closed, and the whole thing will be wrapped in a transaction.
 
 {{{
 using (UnitOfWork.Start)
@@ -56,6 +57,10 @@ using (UnitOfWork.Start)
 }}}
 
 == Find ==
+
+UNDER CONSTRUCTION
+
+=== Parameterized SQL With !DbCommandSpec ===
 
 UNDER CONSTRUCTION
 
