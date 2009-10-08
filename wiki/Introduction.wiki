@@ -6,6 +6,7 @@
  * Entities inherit from IEitity interface which exposes one property: int Id
  * Automatic loading of collections, lazy or eager, configurable per collection
  * Cascading deletes and saves, configurable per collection
+ * Map a collection as filtered
  * Limited Linq support for finding
  * Basic !UnitOfWork capability for session and transaction management
  * {{{Repository<T>}}} base class
