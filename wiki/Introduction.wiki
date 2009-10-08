@@ -43,7 +43,7 @@ using (UnitOfWork.Start())
 
 == IEntity ==
 
-Mapped entities must implement the IEntity interface.  Catnap also provides a base class, Entity, which implements the interface and provides the proper equality comparison.
+Mapped entities must implement the IEntity interface.
 
 {{{
 public interface IEntity
@@ -53,6 +53,8 @@ public interface IEntity
     void SetId(int id);
 }
 }}}
+
+Catnap also provides a base class, Entity, which implements IEntity and provides the proper equality comparison.  This is for convenience and is not required.
 
 == Get & Save ==
 
