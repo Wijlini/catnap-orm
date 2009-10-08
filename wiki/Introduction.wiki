@@ -92,7 +92,7 @@ UNDER CONSTRUCTION
  * Automated tests.  Catnap started as an experimental project and evolved.  It was developed with testability in mind, but not using TDD.  Getting the code under test will be necessary to allow for change and growth.
    * Unit tests, lots of unit tests
    * More integration tests
- * Session cache. Cache fetched entities within a session. This would greatly improve performance, especially for cascading, which currently must retrieve the entire persisted collection 
+ * Session cache. Currently there is no caching of fetched entities.  It will greatly improve performance to cache fetched entities.  This is especially important for cascading, which currently retrieves the entire persisted collection in order to detect changes.
  * ...
 
 UNDER CONSTRUCTION
