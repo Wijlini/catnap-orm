@@ -10,7 +10,7 @@
  * Basic !UnitOfWork capability for session and transaction management
  * {{{Repository<T>}}} base class
  * Database migration feature -- tracks changes and applies updates (forward only)
- * !DbCommandSpec provides a way to create and execute any parameterized query (similar to !IDbCommand)
+ * !DbCommandSpec provides a way to create and execute any parameterized query (similar to IDbCommand)
 
 = Configuration =
 
