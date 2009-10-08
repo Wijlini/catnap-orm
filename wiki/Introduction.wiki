@@ -39,9 +39,7 @@ using (UnitOfWork.Start())
 }
 }}}
 
-= Usage =
-
-== IEntity ==
+= IEntity =
 
 Mapped entities must implement the IEntity interface.
 
@@ -55,6 +53,8 @@ public interface IEntity
 }}}
 
 Catnap also provides a base class, Entity, which implements IEntity and provides the proper equality comparison.  This is for convenience and is not required.
+
+= Usage =
 
 == Get & Save ==
 
