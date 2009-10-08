@@ -1,5 +1,3 @@
-#Getting started
-
 = Features =
 
  * Mapping via fluent interface (no attibute based mapping, but could be added)
