@@ -1,0 +1,63 @@
+#Getting started
+
+= Features =
+
+ * Mapping via fluent interface (no attibute based mapping, but could be added)
+ * Entities inherit from IEitity interface which exposes one property: int Id
+ * Automatic loading of collections, configurable as lazy or eager per collection
+ * Cascading deletes and saves, configurable per collection
+ * Limited Linq support for finding
+ * Basic UnitOfWork capability for session and transaction management
+ * Repository<T> base class
+ * Database migration feature -- tracks changes and applies updates (forward only)
+
+= Configuration =
+
+Your startup code might look something like this:
+
+{{{
+SessionFactory.Initialize("MyDatabase.sqlite");
+DomainMap.Configure
+    (
+    new EntityMap<Person>()
+        .Property(x => x.Id)
+        .Property(x => x.FirstName)
+        .Property(x => x.LastName),
+    new EntityMap<Forum>()
+        .Property(x => x.Id)
+        .List(x => x.Posts)
+        .Property(x => x.Name),
+    new EntityMap<Post>("ForumId")
+        .Property(x => x.Id)
+        .Property(x => x.Title)
+        .Property(x => x.Body)
+        .BelongsTo(x => x.Poster, "PosterId")
+    );
+UnitOfWork.Start();
+DatabaseMigrator.Execute();
+}}}
+
+= Usage =
+
+Here we will fetch a forum, change the title, remove a post, and add a post then save the forum.  The Posts collection will be loaded lazily, and the adds/deletes will be cascaded when the forum is saved.  A connection will be opened and closed, and the whole thing will be wrapped in a transaction.
+
+{{{
+using (UnitOfWork.Start)
+{
+   var person = personRepository.Get(1);
+   var forum = forumRepository.Get(1);
+   forum.Title = "Annoying Complaints";
+   forum.RemovePost(forum.Posts[0]);
+   forum.AddPost(new Post { Title = "Please help!", Body "Now!", Person = person });
+   forumRepository.Save(forum);
+}
+}}}
+
+= Priority To Add =
+
+ * Unit tests, lots of unit tests
+ * More integration tests
+ * Session cache
+ * ...
+
+UNDER CONSTRUCTION
