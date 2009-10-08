@@ -70,6 +70,4 @@ UNDER CONSTRUCTION
  * Unit tests, lots of unit tests
  * More integration tests
  * Session cache
- * ...
-
-UNDER CONSTRUCTION
+ * UNDER CONSTRUCTION
