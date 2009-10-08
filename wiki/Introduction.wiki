@@ -35,8 +35,10 @@ DomainMap.Configure
         .Property(x => x.Body)
         .BelongsTo(x => x.Poster, "PosterId")
     );
-UnitOfWork.Start();
-DatabaseMigrator.Execute();
+using (UnitOfWork.Start())
+{
+    DatabaseMigrator.Execute();
+}
 }}}
 
 = Usage =
