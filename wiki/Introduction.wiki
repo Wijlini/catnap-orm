@@ -1,15 +1,18 @@
 = Features =
 
- * Mapping via fluent interface (no auto mapping or attibute based mapping, but could be added)
- * Entities inherit from IEitity interface
- * Automatic loading of collections, lazy or eager, configurable per collection
- * Cascading deletes and saves, configurable per collection
- * Filtered collection mapping
- * Basic !UnitOfWork capability for session and transaction management
- * {{{Repository<T>}}} base class
- * Database migration feature -- tracks changes and applies updates (forward only)
+ * Mapping is done via a fluent interface
+ * Mapped entities inherit from IEntity interface
+ * Mapped collections 
+   * Automatic loading - lazy or eager as specified per collection
+   * Automatic cascading - saves/updates and/or deletes as specified per collection
+   * Filter.  Specify a filter criteria for a collection
+ * Control connection and transaction boundaries via a basic !UnitOfWork context
+ * `Repository<T>` base class provides basic operations
+ * `IFindSpec<T>` provides means to abstract find queries
+ * Database migration utility. Provides automatic deployment of database changes based on migrations (forward only) that you write
  * !DbCommandSpec provides a way to create and execute any parameterized query (similar to IDbCommand)
- * Support for Linq predicates for finding (very limited)
+ * Support for Linq predicates for finding and filtering collections (very limited)
+ * No dependencies except sqlite3.dll
 
 = Configuration =
 
@@ -39,9 +42,13 @@ using (UnitOfWork.Start())
 }
 }}}
 
+= sqlite3.dll =
+
+The sqlite3.dll COM assembly must be in your application directory.
+
 = IEntity =
 
-Mapped entities must implement the IEntity interface.
+Mapped entities must implement the IEntity interface.  Entities use an integer primary key  which is assumed to be auto-incremented by the database.
 
 {{{
 public interface IEntity
@@ -82,8 +89,10 @@ UNDER CONSTRUCTION
 
 = Priority To Add =
 
- * Unit tests, lots of unit tests
- * More integration tests
- * Session cache  
+ * Automated tests.  Catnap started as an experimental project and evolved.  It was developed with testability in mind, but not using TDD.  Getting the code under test will be necessary to allow for change and growth.
+   * Unit tests, lots of unit tests
+   * More integration tests
+ * Session cache. Cache fetched entities within a session. This would greatly improve performance, especially for cascading, which currently must retrieve the entire persisted collection 
  * ...
- * UNDER CONSTRUCTION
+
+UNDER CONSTRUCTION
