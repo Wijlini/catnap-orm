@@ -5,7 +5,7 @@
  * Mapped collections 
    * Automatic loading - lazy or eager as specified per collection
    * Automatic cascading - saves/updates and/or deletes as specified per collection
-   * Filter.  Specify a filter criteria for a collection
+   * Filtering.  Specify a filter criteria for a collection
  * Control connection and transaction boundaries via a basic !UnitOfWork context
  * `Repository<T>` base class provides basic operations
  * `IFindSpec<T>` provides means to abstract find queries
