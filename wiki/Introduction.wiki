@@ -1,6 +1,6 @@
 = Features =
 
- * Mapping via fluent interface (no attibute based mapping, but could be added)
+ * Mapping via fluent interface (no auto mapping or attibute based mapping, but could be added)
  * Entities inherit from IEitity interface which exposes one property: int Id
  * Automatic loading of collections, lazy or eager, configurable per collection
  * Cascading deletes and saves, configurable per collection
