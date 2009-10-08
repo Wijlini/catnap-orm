@@ -10,9 +10,13 @@
  * `Repository<T>` base class provides basic operations
  * `IFindSpec<T>` provides means to abstract find queries
  * !DbCommandSpec provides a way to create and execute any parameterized query (similar to IDbCommand)
- * Support for Linq predicates for finding and filtering collections (very limited
- * Database migration utility. Provides automatic deployment of database changes based on migrations (forward only) that you write)
+ * Support for Linq predicates for finding and filtering collections (very limited at present)
+ * Database migration utility. Provides automatic deployment of database changes based on migrations (forward only) that you write
  * No dependencies except sqlite3.dll
+
+= sqlite3.dll =
+
+The sqlite3.dll COM assembly must be in your application directory.
 
 = Configuration =
 
@@ -42,10 +46,6 @@ using (UnitOfWork.Start())
 }
 }}}
 
-= sqlite3.dll =
-
-The sqlite3.dll COM assembly must be in your application directory.
-
 = IEntity =
 
 Mapped entities must implement the IEntity interface.  Entities use an integer primary key  which is assumed to be auto-incremented by the database.
@@ -65,7 +65,7 @@ Catnap also provides a base class, Entity, which implements IEntity and provides
 
 == Get & Save ==
 
-Here we will fetch a forum, change its title, remove a post, and add a post then save the forum.  The Posts collection will be loaded lazily.  The adds/deletes to Posts will be cascaded when the forum is saved.  A connection will be opened and closed, and the whole thing will be wrapped in a transaction.
+Below we fetch a forum, change its title, remove a post and add a post, then save the forum.  The Posts collection will be loaded lazily.  The adds/deletes to Posts will be cascaded when the forum is saved.  At the start of the using block a connection will be opened and a transaction started.  At the end of the using block the transaction will be committed (or rolled back in the case of an error) and the connection will be closed.
 
 {{{
 using (UnitOfWork.Start())
@@ -89,10 +89,10 @@ UNDER CONSTRUCTION
 
 = Priority To Add =
 
- * Automated tests.  Catnap started as an experimental project and evolved.  It was developed with testability in mind, but not using TDD.  Getting the code under test will be necessary to allow for change and growth.
+ * Automated tests.  Catnap started as an experimental project that has evolved into something useful.  While it was developed with loose coupling and testability in mind, TDD/BDD was not used.  Getting the code under test will be necessary to allow for change and growth
    * Unit tests, lots of unit tests
    * More integration tests
- * Session cache. Currently there is no caching of fetched entities.  It will greatly improve performance to cache fetched entities.  This is especially important for cascading, which currently retrieves the entire persisted collection in order to detect changes.
+ * Session cache. Currently there is no caching of fetched entities, which creates a performance problem, specifically for for cascading.  Cascading currently must retrieve the entire persisted collection in order to synchronize changes.  Therefore, cascading is currently only appropriate for collections of a small size.
  * ...
 
 UNDER CONSTRUCTION
