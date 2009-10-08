@@ -21,21 +21,21 @@ Something like this at startup:
 {{{
 SessionFactory.Initialize("MyDatabase.sqlite");
 DomainMap.Configure
-    (
+(
     new EntityMap<Person>()
         .Property(x => x.Id)
         .Property(x => x.FirstName)
         .Property(x => x.LastName),
     new EntityMap<Forum>()
         .Property(x => x.Id)
-        .List(x => x.Posts)
         .Property(x => x.Name),
+        .List(x => x.Posts)
     new EntityMap<Post>("ForumId")
         .Property(x => x.Id)
         .Property(x => x.Title)
         .Property(x => x.Body)
         .BelongsTo(x => x.Poster, "PosterId")
-    );
+);
 using (UnitOfWork.Start())
 {
     DatabaseMigrator.Execute();
