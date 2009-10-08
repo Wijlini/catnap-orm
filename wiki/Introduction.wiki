@@ -1,7 +1,7 @@
 = Features =
 
  * Mapping via fluent interface (no auto mapping or attibute based mapping, but could be added)
- * Entities inherit from IEitity interface which exposes three properties: int Id, bool IsTransiten, void SetId(int id)
+ * Entities inherit from IEitity interface
  * Automatic loading of collections, lazy or eager, configurable per collection
  * Cascading deletes and saves, configurable per collection
  * Filtered collection mapping
@@ -40,6 +40,19 @@ using (UnitOfWork.Start())
 }}}
 
 = Usage =
+
+== IEntity ==
+
+Mapped entities must implement the IEntity interface.  Catnap also provides a base class, Entity, which implements the interface and provides the proper equality comparison.
+
+{{{
+public interface IEntity
+{
+    int Id { get; }
+    bool IsTransient { get; }
+    void SetId(int id);
+}
+}}}
 
 == Get & Save ==
 
