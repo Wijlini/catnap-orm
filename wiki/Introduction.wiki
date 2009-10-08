@@ -7,11 +7,11 @@
  * Automatic loading of collections, lazy or eager, configurable per collection
  * Cascading deletes and saves, configurable per collection
  * Map a collection as filtered
- * Limited Linq support for finding
  * Basic !UnitOfWork capability for session and transaction management
  * {{{Repository<T>}}} base class
  * Database migration feature -- tracks changes and applies updates (forward only)
  * !DbCommandSpec provides a way to create and execute any parameterized query (similar to IDbCommand)
+ * Support for Linq predicates for finding (very limited)
 
 = Configuration =
 
