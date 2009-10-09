@@ -2,10 +2,10 @@
 
  * Mapping is done via a fluent interface
  * Mapped entities inherit from IEntity interface
- * Mapped collections 
-   * Automatic loading - lazy or eager as specified per collection
-   * Automatic cascading - saves/updates and/or deletes as specified per collection
-   * Filtering.  Specify a filter criteria for a collection
+ * Mapped collections:
+   * automatic loading - lazy or eager, specified per collection
+   * automatic cascading - saves/updates and/or deletes, specified per collection
+   * filtering - criteria specified per collection
  * Control connection and transaction boundaries via a basic !UnitOfWork context
  * `Repository<T>` base class provides basic operations
  * `IFindSpec<T>` provides means to abstract find queries
@@ -93,8 +93,8 @@ UNDER CONSTRUCTION
    * Unit tests, lots of unit tests
    * More integration tests
  * Session cache. Currently there is no caching of fetched entities.  This creates a performance problem, specifically for cascading.  To cascade we must retrieve the entire persisted collection to be able to synchronize changes.  Therefore, cascading is currently only appropriate for collections of a small size.
- * Lazy loading of BelongsTo properties
- * If possible introduce IoC.  Most IoC containers won't work on MonoTouch.  Look into [http://funq.codeplex.com/ Funq] and [http://docs.codehaus.org/display/PICO/Home PicoContainer.NET]
+ * Lazy loading of !BelongsTo (many-to-one) properties
+ * Introduce IoC, if possible.  (most IoC containers won't work on !MonoTouch.  Look into [http://funq.codeplex.com/ Funq] and [http://docs.codehaus.org/display/PICO/Home PicoContainer.NET])
  * ...
 
 UNDER CONSTRUCTION
