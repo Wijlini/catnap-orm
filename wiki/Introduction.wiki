@@ -1,17 +1,17 @@
 = Features =
 
- * Mapping is done via a fluent interface
+ * Fluent interface for mapping
  * Mapped entities inherit from IEntity interface
  * Mapped collections:
    * automatic loading - lazy or eager, specified per collection
    * automatic cascading - saves/updates and/or deletes, specified per collection
-   * filtering - criteria specified per collection
- * Control connection and transaction boundaries via a basic !UnitOfWork context
- * `Repository<T>` base class provides basic operations
- * `IFindSpec<T>` provides means to abstract find queries
- * !DbCommandSpec provides a way to create and execute any parameterized query (similar to IDbCommand)
+   * filtering - criteria can be specified per collection
+ * Connection and transaction boundaries controlled via a basic !UnitOfWork context
+ * Repository`<T>` base class implements basic persistence operations
+ * IFindSpec`<T>` provides means to abstract find queries
+ * !DbCommandSpec provides a means to create any kind of parameterized query (similar to IDbCommand)
  * Support for Linq predicates for finding and filtering collections (very limited at present)
- * Database migration utility. Provides automatic deployment of database changes based on migrations (forward only) that you write
+ * Database migration utility. Provides automatic deployment of database changes based on migrations that you write (forward only)
  * No dependencies except sqlite3.dll
 
 = sqlite3.dll =
@@ -20,7 +20,7 @@ The sqlite3.dll COM assembly must be in your application directory.
 
 = Configuration =
 
-Something like this at startup:
+Startup might look something like this:
 
 {{{
 SessionFactory.Initialize("MyDatabase.sqlite");
@@ -46,9 +46,9 @@ using (UnitOfWork.Start())
 }
 }}}
 
-= IEntity =
+= IEntity Interface =
 
-Mapped entities must implement the IEntity interface.  Entities use an integer primary key  which is assumed to be auto-incremented by the database.
+Mapped entities must implement the IEntity interface.  All entities use an integer primary key which is assumed to be auto-incremented by the database.
 
 {{{
 public interface IEntity
@@ -59,11 +59,11 @@ public interface IEntity
 }
 }}}
 
-Catnap also provides a base class, Entity, which implements IEntity and provides the proper equality comparison.  This is for convenience and is not required.
+Catnap also provides a base class, Entity, which implements IEntity and provides the equality comparison.  This is for convenience and is not required.
 
 = Usage =
 
-== Get & Save ==
+== Get and Save ==
 
 Below we fetch a forum, change its title, remove a post and add a post, then save the forum.  The Posts collection will be loaded lazily.  The adds/deletes to Posts will be cascaded when the forum is saved.  At the start of the using block a connection will be opened and a transaction started.  At the end of the using block the transaction will be committed (or rolled back in the case of an error) and the connection will be closed.
 
@@ -89,12 +89,12 @@ UNDER CONSTRUCTION
 
 = Priority To Add =
 
- * Automated tests.  Catnap started as an experimental project that has evolved into something useful.  While it was developed with loose coupling and testability in mind, TDD/BDD was not used.  Getting the code under test will be necessary to allow for change and growth
+ * Automated tests.  Catnap started as an experimental project that has evolved into something useful.  While it was developed with loose coupling and testability in mind, TDD/BDD was not used.  Getting the code under test will be necessary to allow for fluid change and growth
    * Unit tests, lots of unit tests
    * More integration tests
- * Session cache. Currently there is no caching of fetched entities.  This creates a performance problem, specifically for cascading.  To cascade we must retrieve the entire persisted collection to be able to synchronize changes.  Therefore, cascading is currently only appropriate for collections of a small size.
+ * Session cache. Currently there is no caching of fetched entities.  This creates a performance problem for cascading.  To cascade we must retrieve the entire persisted collection to be able to synchronize changes.  Therefore, cascading is currently only appropriate for collections of a small size.
  * Lazy loading of !BelongsTo (many-to-one) properties
- * Introduce IoC, if possible.  (most IoC containers won't work on !MonoTouch.  Look into [http://funq.codeplex.com/ Funq] and [http://docs.codehaus.org/display/PICO/Home PicoContainer.NET])
+ * Introduce IoC, if possible.  (Most IoC containers won't work on !MonoTouch.  Posibilities are [http://funq.codeplex.com/ Funq] and [http://docs.codehaus.org/display/PICO/Home PicoContainer.NET])
  * ...
 
 UNDER CONSTRUCTION
