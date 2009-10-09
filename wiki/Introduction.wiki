@@ -87,7 +87,7 @@ UNDER CONSTRUCTION
 
 UNDER CONSTRUCTION
 
-= Priority To Add =
+= Development Priorities =
 
  * Automated tests.  Catnap started as an experimental project that has evolved into something useful.  While it was developed with loose coupling and testability in mind, TDD/BDD was not used.  Getting the code under test will be necessary to allow for fluid change and growth
    * Unit tests, lots of unit tests
