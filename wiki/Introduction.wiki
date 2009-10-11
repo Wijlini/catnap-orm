@@ -1,6 +1,6 @@
 = Features =
 
- * Fluent interface for mapping
+ * Fluent mapping
  * Mapped entities inherit from IEntity interface
  * Mapped collections:
    * automatic loading - lazy or eager, specified per collection
@@ -8,11 +8,12 @@
    * filtering - criteria can be specified per collection
  * Connection and transaction boundaries controlled via a basic !UnitOfWork context
  * Repository`<T>` base class implements basic persistence operations
- * IFindSpec`<T>` provides means to abstract find queries
+ * Simple ICriteria API for building conditions for find queries
  * !DbCommandSpec provides a means to create any kind of parameterized query (similar to IDbCommand)
  * Support for Linq predicates for finding and filtering collections (very limited at present)
  * Database migration utility. Provides automatic deployment of database changes based on migrations that you write (forward only)
  * No dependencies except sqlite3.dll
+ * Very lightweight (currently well under 100k)
 
 = sqlite3.dll =
 
@@ -79,22 +80,125 @@ using (UnitOfWork.Start())
 }
 }}}
 
-== Find ==
+== Repository`<T>` ==
 
-UNDER CONSTRUCTION
+Catnap provides an base repository implementation with the basic persistence operations, based this interface:
 
-=== Parameterized SQL With !DbCommandSpec ===
+{{{
+public interface IRepository<T> where T : class, IEntity, new()
+{
+    T Get(int id);
+    void Save(T entity);
+    void Delete(int id);
+    IEnumerable<T> Find();
+    IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+    IEnumerable<T> Find(ICriteria criteria);
+}
+}}} 
 
-UNDER CONSTRUCTION
+== Criteria ==
+
+Criteria provides a way to specify conditions for a find command.  For example:
+
+{{{
+public class TimeEntryRepository : Repository<TimeEntry>, ITimeEntryRepository
+{
+    public IEnumerable<TimeEntry> Find(int projectId)
+    {
+        return Find(new TimeEntriesCriteria().Project(projectId));
+    }
+
+    public IEnumerable<TimeEntry> FindUnbilled(int projectId)
+    {
+        return Find(new TimeEntriesCriteria().Project(projectId).Billed(false));
+    }
+
+    public IEnumerable<TimeEntry> FindBilled(int projectId)
+    {
+        return Find(new TimeEntriesCriteria().Project(projectId).Billed(true));
+    }
+
+    private class TimeEntriesCriteria : Criteria
+    {
+        public TimeEntriesCriteria Project(int projectId)
+        {
+            Add(Condition.Equal<TimeEntry>(x => x.Project, projectId));
+            return this;
+        }
+
+        public TimeEntriesCriteria Billed(bool billed)
+        {
+            Add(Condition.Equal<TimeEntry>(x => x.Billed, billed));
+            return this;
+        }
+    }
+}
+}}}
+
+The following unit test illustrates more complex criteria:
+
+{{{
+public class when_creating_a_complex_condition
+{
+    static Criteria target;
+
+    private Because of = () =>
+    {
+        DomainMap.Configure(new EntityMap<Person>().Property(x => x.FirstName));
+        target = new Criteria
+        (
+            Condition.Less("Bar", 1000),
+            Condition.GreaterOrEqual("Bar", 300),
+            Condition.Or
+            (
+                Condition.NotEqual<Person>(x => x.FirstName, "Tim"),
+                Condition.And
+                (
+                    Condition.Equal("Foo", 25),
+                    Condition.Equal("Baz", 500)
+                )
+            )
+        );
+    };
+
+    It should_render_correct_string = () => target.Build().ToString().Should()
+        .Equal("((Bar < @0) and (Bar >= @1) and ((FirstName != @2) or ((Foo = @3) and (Baz = @4))))");
+
+    It should_contain_expected_parameters = () =>
+    {
+        target.Build();
+        target.Parameters.Should().Count.Exactly(5);
+        target.Parameters.Should().Contain.One(x => x.Name == "@0" && x.Value.Equals(1000));
+        target.Parameters.Should().Contain.One(x => x.Name == "@1" && x.Value.Equals(300));
+        target.Parameters.Should().Contain.One(x => x.Name == "@2" && x.Value.Equals("Tim"));
+        target.Parameters.Should().Contain.One(x => x.Name == "@3" && x.Value.Equals(25));
+        target.Parameters.Should().Contain.One(x => x.Name == "@4" && x.Value.Equals(500));
+    };
+}
+}}}
+
+One notable limitation of the criteria API is that it only provides for conditions on simple properties of the entity.  It does not provide for any aggregate operations on collection or tests against nested properties.
+
+=== !ExecuteQuery and !ExecuteNonQuery with !DbCommandSpec ===
+
+The base repository provides basic persistence operations on mapped entities and their collections.  However you may want to perform more complex queries that return raw data.  For this purpose Session exposes !ExecuteQuery and !ExecuteNonQuery which are used in conjunction with !DbCommandSpec. For example:
+
+{{{
+var sql = @"select e.Id, c.Name from TimeEntry e
+    inner join Project p on e.ProjectId = p.Id
+    inner join Client c on p.ClientId = c.Id
+    where c.Name = @name";
+var command = new DbCommandSpec().SetCommandText(sql).AddParameter("@name", "Acme")
+return UnitOfWork.Current.Session.ExecuteQuery(command);
+}}}
+
+The return value is of type IDictionary<string, object>, where the Key is the column name and Value is the column value.
 
 = Development Priorities =
 
- * Automated tests.  Catnap started as an experimental project that has evolved into something useful.  While it was developed with loose coupling and testability in mind, TDD/BDD was not used.  Getting the code under test will be necessary to allow for fluid change and growth
-   * Unit tests, lots of unit tests
-   * More integration tests
+ * Automated tests.  Catnap started as an experimental project that has evolved into something useful.  While it was developed with loose coupling and testability in mind, TDD/BDD was not used.  Getting the code under test will be necessary to allow for fluid change and growth.
+   * Unit tests, lots of unit tests.
+   * More integration tests.
  * Session cache. Currently there is no caching of fetched entities.  This creates a performance problem for cascading.  To cascade we must retrieve the entire persisted collection in order to synchronize changes.  Therefore, cascading is currently only appropriate for collections of a small size.
- * Lazy loading of !BelongsTo (many-to-one) properties
+ * Lazy loading of !BelongsTo (many-to-one) properties.
  * Introduce IoC, if possible.  (Most IoC containers won't work on !MonoTouch.  Posibilities are [http://funq.codeplex.com/ Funq] and [http://docs.codehaus.org/display/PICO/Home PicoContainer.NET])
- * ...
-
-UNDER CONSTRUCTION
