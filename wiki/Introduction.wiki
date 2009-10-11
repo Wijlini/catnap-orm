@@ -192,7 +192,7 @@ var command = new DbCommandSpec().SetCommandText(sql).AddParameter("@name", "Acm
 return UnitOfWork.Current.Session.ExecuteQuery(command);
 }}}
 
-The return value is of type IDictionary<string, object>, where the Key is the column name and Value is the column value.
+The return value is of type IEnumerable`<IDictionary<string, object>>`, each item is a row.  Each item in the dictionary is a cell with Key being the cell name and Value being the cell value.
 
 = Development Priorities =
 
