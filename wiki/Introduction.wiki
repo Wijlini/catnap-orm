@@ -179,20 +179,60 @@ public class when_creating_a_complex_condition
 
 One notable limitation of the criteria API is that it only provides for conditions on simple properties of the entity.  It does not provide for any aggregate operations on collection or tests against nested properties.
 
-=== !ExecuteQuery and !ExecuteNonQuery with !DbCommandSpec ===
+=== !DbCommandSpec ===
 
-The base repository provides basic persistence operations on mapped entities and their collections.  However you may want to perform more complex queries that return raw data.  For this purpose Session exposes !ExecuteQuery and !ExecuteNonQuery which are used in conjunction with !DbCommandSpec. For example:
+Where Criteria leaves off, !DbCommandSpec picks up.  It allows you to do more complex queries and still return entities instead of raw data.  For example:
 
 {{{
-var sql = @"select e.Id, c.Name from TimeEntry e
-    inner join Project p on e.ProjectId = p.Id
-    inner join Client c on p.ClientId = c.Id
-    where c.Name = @name";
-var command = new DbCommandSpec().SetCommandText(sql).AddParameter("@name", "Acme")
+var command = new DbCommandSpec()
+    .SetCommandText(
+        @"select e.* from TimeEntry e 
+        inner join Project p on p.Id = e.ProjectId
+        inner join Client c on c.Id = p.ClientId
+        where c.Id = @clientId")
+    .AddParameter("@clientId", clientId);
+return UnitOfWork.Current.Session.List<TimeEntry>(command);
+}}}
+
+This will return a list of !TimeEntry items.
+
+=== !ExecuteQuery ===
+
+In cases where you want to fetch raw data, perhaps to populate DTOs, you can use
+!ExecuteQuery.  For example:
+
+{{{
+var command = new DbCommandSpec()
+    .SetCommandText(
+        @"select e.Id, c.Name from TimeEntry e
+        inner join Project p on e.ProjectId = p.Id
+        inner join Client c on p.ClientId = c.Id
+        where c.Name = @name")
+   .AddParameter("@name", "Acme")
 return UnitOfWork.Current.Session.ExecuteQuery(command);
 }}}
 
-The return value is of type IEnumerable`<IDictionary<string, object>>`, each item is a row.  Each item in the dictionary is a cell with Key being the cell name and Value being the cell value.
+The return value is of type `IEnumerable<IDictionary<string, object>>`, each item of which is a row.  Each item in the dictionary is a cell with Key being the cell name and Value being the cell value.
+
+=== !ExecuteNonQuery ===
+
+For example:
+
+{{{
+var command = new DbCommandSpec()
+    .SetCommandText("create table Foo (Bar varchar(200))");
+UnitOfWork.Current.Session.ExecuteNonQuery(command);
+}}}
+
+=== !ExecuteScalar ===
+
+For example:
+
+{{{
+var command = new DbCommandSpec()
+    .SetCommandText("select count(*) from Foo where Bar = 'bar'");
+int count = UnitOfWork.Current.Session.ExecuteScalar<int>(command);
+}}}
 
 = Development Priorities =
 
