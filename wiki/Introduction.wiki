@@ -187,9 +187,9 @@ Where Criteria leaves off, !DbCommandSpec picks up.  It allows you to do more co
 var command = new DbCommandSpec()
     .SetCommandText(
         @"select e.* from TimeEntry e 
-        inner join Project p on p.Id = e.ProjectId
-        inner join Client c on c.Id = p.ClientId
-        where c.Id = @clientId")
+            inner join Project p on p.Id = e.ProjectId
+            inner join Client c on c.Id = p.ClientId
+          where c.Id = @clientId")
     .AddParameter("@clientId", clientId);
 return UnitOfWork.Current.Session.List<TimeEntry>(command);
 }}}
@@ -205,9 +205,9 @@ In cases where you want to fetch raw data, perhaps to populate DTOs, you can use
 var command = new DbCommandSpec()
     .SetCommandText(
         @"select e.Id, c.Name from TimeEntry e
-        inner join Project p on e.ProjectId = p.Id
-        inner join Client c on p.ClientId = c.Id
-        where c.Name = @name")
+            inner join Project p on e.ProjectId = p.Id
+            inner join Client c on p.ClientId = c.Id
+          where c.Name = @name")
    .AddParameter("@name", "Acme")
 return UnitOfWork.Current.Session.ExecuteQuery(command);
 }}}
