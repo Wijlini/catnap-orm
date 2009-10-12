@@ -241,4 +241,4 @@ int count = UnitOfWork.Current.Session.ExecuteScalar<int>(command);
    * More integration tests.
  * Session cache. Currently there is no caching of fetched entities.  This creates a performance problem for cascading.  To cascade we must retrieve the entire persisted collection in order to synchronize changes.  Therefore, cascading is currently only appropriate for collections of a small size.
  * Lazy loading of !BelongsTo (many-to-one) properties.
- * Introduce IoC, if possible.  (Most IoC containers won't work on !MonoTouch.  Posibilities are [http://funq.codeplex.com/ Funq] and [http://docs.codehaus.org/display/PICO/Home PicoContainer.NET])
+ * Introduce lightweight IoC, if possible.  (Most IoC containers won't work on !MonoTouch.  Posibilities are [http://funq.codeplex.com/ Funq] and [http://docs.codehaus.org/display/PICO/Home PicoContainer.NET])
