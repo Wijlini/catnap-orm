@@ -60,7 +60,7 @@ public interface IEntity
 }
 }}}
 
-Catnap also provides a base class, Entity, which implements IEntity and provides the equality comparison.  This is for convenience and is not required.
+Catnap also provides a base class, Entity, which implements IEntity and provides equality comparison.  This is for convenience and is not required.
 
 = Usage =
 
