@@ -82,7 +82,7 @@ using (UnitOfWork.Start())
 
 == Repository`<T>` ==
 
-Catnap provides an base repository implementation with the basic persistence operations, based this interface:
+Catnap provides a base repository implementation with the basic persistence operations.  The base repository implements this interface:
 
 {{{
 public interface IRepository<T> where T : class, IEntity, new()
