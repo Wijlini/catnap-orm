@@ -25,7 +25,7 @@ Startup might look something like this:
 
 {{{
 SessionFactory.Initialize("MyDatabase.sqlite");
-DomainMap.Configure
+Domain.Configure
 (
     Map.Entity<Person>()
         .Property(x => x.Id)
