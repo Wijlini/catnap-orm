@@ -28,6 +28,7 @@ SessionFactory.Initialize("MyDatabase.sqlite");
 Domain.Configure
 (
     Map.Entity<Person>()
+        .Table("Users")
         .Property(x => x.Id)
         .Property(x => x.FirstName)
         .Property(x => x.LastName),
