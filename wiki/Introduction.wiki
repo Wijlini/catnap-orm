@@ -27,15 +27,16 @@ Startup might look something like this:
 SessionFactory.Initialize("MyDatabase.sqlite");
 DomainMap.Configure
 (
-    new EntityMap<Person>()
+    Map.Entity<Person>()
         .Property(x => x.Id)
         .Property(x => x.FirstName)
         .Property(x => x.LastName),
-    new EntityMap<Forum>()
+    Map.Entity<Forum>()
         .Property(x => x.Id)
         .Property(x => x.Name),
         .List(x => x.Posts)
-    new EntityMap<Post>("ForumId")
+    Map.Entity<Post>()
+        .ParentColumn("ForumId")
         .Property(x => x.Id)
         .Property(x => x.Title)
         .Property(x => x.Body)
