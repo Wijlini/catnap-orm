@@ -29,16 +29,13 @@ Domain.Configure
 (
     Map.Entity<Person>()
         .Table("Users")
-        .Property(x => x.Id)
         .Property(x => x.FirstName)
         .Property(x => x.LastName),
     Map.Entity<Forum>()
-        .Property(x => x.Id)
         .Property(x => x.Name),
         .List(x => x.Posts)
     Map.Entity<Post>()
         .ParentColumn("ForumId")
-        .Property(x => x.Id)
         .Property(x => x.Title)
         .Property(x => x.Body)
         .BelongsTo(x => x.Poster, "PosterId")
@@ -48,6 +45,8 @@ using (UnitOfWork.Start())
     DatabaseMigrator.Execute();
 }
 }}}
+
+Notice that you do not have to map the Id property.  All other persisted properties must be mapped and must have both a getter and a setter.  The getters and setters can be either public or non-public.
 
 = IEntity Interface =
 
