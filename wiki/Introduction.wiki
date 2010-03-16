@@ -48,6 +48,28 @@ using (UnitOfWork.Start())
 
 Notice that you do not have to map the Id property.  All other persisted properties must be mapped and must have both a getter and a setter.  The getters and setters can be either public or non-public.
 
+== Alternate Mapping Syntax ==
+
+Because of a [http://bugzilla.novell.com/show_bug.cgi?id=551623 bug in MonoTouch], the above syntax does not work on the IPhone device.  Fortunately, there is a workaround.  It's a little more verbose than the previous example, but it works.  The following is functionally equivalent to the Domain.Configure statement in the previous example.
+
+{{{
+Domain.Configure
+(
+    Map.Entity<Person>()
+        .Table("Users")
+        .Map(new ValuePropertyMap<Person, string>(x => x.FirstName))
+        .Map(new ValuePropertyMap<Person, string>(x => x.LastName)),
+    Map.Entity<Forum>()
+        .Map(new ValuePropertyMap<Forum, string>(x => x.Name)),
+        .Map(new ListPropertyMap<Forum, Post>(x => x.Posts, true))
+    Map.Entity<Post>()
+        .ParentColumn("ForumId")
+        .Map(new ValuePropertyMap<Post, string>(x => x.Title))
+        .Map(new ValuePropertyMap<Post, string>(x => x.Body))
+        .Map(new BelongsToPropertyMap<Post, Person>(x => x.Poster, "PosterId"))
+);
+}}}
+
 = IEntity Interface =
 
 Mapped entities must implement the IEntity interface.  All entities use an integer primary key which is assumed to be auto-incremented by the database.
