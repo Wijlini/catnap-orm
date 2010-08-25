@@ -165,7 +165,7 @@ public class when_creating_a_complex_condition
 {
     static Criteria target;
 
-    private Because of = () =>
+    Because of = () =>
     {
         DomainMap.Configure(new EntityMap<Person>().Property(x => x.FirstName));
         target = new Criteria
