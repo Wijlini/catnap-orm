@@ -76,6 +76,8 @@ Passing an instance of !SqliteAdapter into the !SessionFactory tells Catnap to f
 SessionFactory.Initialize("Data source=MyDatabase.sqlite", new SqliteAdapter(typeof(SqliteConnection));
 }}}
 
+This is required because Mono (at least MonoTouch) encounters an error trying to dynamically load the type at runtime.
+
 = IEntity Interface =
 
 Mapped entities must implement the IEntity interface.  All entities use an integer primary key which is assumed to be auto-incremented by the database.
