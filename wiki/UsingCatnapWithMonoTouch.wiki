@@ -27,7 +27,8 @@ Domain.Configure
 In the configuration example in the [Introduction], we pass a !SqliteAdapter into the !SessionFactory.  Among other things, this tells Catnap to find System.Data.Sqlite.dll in the bin folder.  If you are using Mono.Data.Sqlite.dll you must tell the adapter the type of the  connection, like so:
 
 {{{
-SessionFactory.Initialize("Data source=MyDatabase.sqlite", new SqliteAdapter(typeof(Mono.Data.Sqlite.SqliteConnection));
+SessionFactory.Initialize("Data source=MyDatabase.sqlite", 
+    new SqliteAdapter(typeof(Mono.Data.Sqlite.SqliteConnection));
 }}}
 
 Couldn't we just add !MonoSqliteAdapter to Catnap?  We could but it won't work on !MonoTouch.  !MonoTouch, it seems, is not quite able to dynamically load a type at runtime.  It throws a !TypeLoadException.
