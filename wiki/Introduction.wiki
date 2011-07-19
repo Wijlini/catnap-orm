@@ -51,7 +51,7 @@ Notice that you do not have to map the Id property.  All other persisted propert
 
 ==!MonoTouch==
 
-There are some [UsingCatnapWithMonoTouch special considerations for using Catnap with MonoTouch].
+There are some special considerations for [UsingCatnapWithMonoTouch using Catnap with MonoTouch].
 
 = IEntity Interface =
 
