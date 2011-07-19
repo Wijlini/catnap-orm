@@ -31,4 +31,4 @@ SessionFactory.Initialize("Data source=MyDatabase.sqlite",
     new SqliteAdapter(typeof(Mono.Data.Sqlite.SqliteConnection));
 }}}
 
-Couldn't we just add !MonoSqliteAdapter to Catnap?  We could but it won't work on !MonoTouch.  !MonoTouch, it seems, is not quite able to dynamically load a type at runtime.  It throws a !TypeLoadException.
+Couldn't we just add !MonoSqliteAdapter to Catnap?  We could but it won't work on iOS devices.  !MonoTouch, it seems, is not quite able to dynamically load a type at runtime.  It throws a !TypeLoadException.
