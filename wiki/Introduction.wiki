@@ -12,7 +12,7 @@
  * Simple ICriteria API to build complex find queries
  * Create any kind of parameterized raw SQL query in code
  * Use Linq predicates to create find queries and to filter collections (very limited at present)
- * Database migration utility. Automatically deploy database changes based on migrations that you write (forward only).  This is great for embedded database applications.
+ * Database migration utility. Automatically deploy database changes based on migrations that you write (forward only).  Very useful for embedded database applications.
  * Uses ADO.NET API.  Currently implemented for Sqlite.  Tested with:
    * System.Data.Sqlite
    * Mono.Data.Sqlite
