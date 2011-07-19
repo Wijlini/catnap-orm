@@ -49,37 +49,7 @@ using (UnitOfWork.Start())
 
 Notice that you do not have to map the Id property.  All other persisted properties must be mapped and must have both a getter and a setter.  The getters and setters _do not_ have to be public.
 
-== Alternate Mapping Syntax ==
-
-Because of a [http://bugzilla.novell.com/show_bug.cgi?id=551623 bug in MonoTouch], the above syntax does not work on the IPhone device.  Fortunately, there is a workaround.  It's a little more verbose than the previous example, but it works.  The following is functionally equivalent to the Domain.Configure statement in the previous example.
-
-{{{
-Domain.Configure
-(
-    Map.Entity<Person>()
-        .Table("Users")
-        .Map(new ValuePropertyMap<Person, string>(x => x.FirstName))
-        .Map(new ValuePropertyMap<Person, string>(x => x.LastName)),
-    Map.Entity<Forum>()
-        .Map(new ValuePropertyMap<Forum, string>(x => x.Name)),
-        .Map(new ListPropertyMap<Forum, Post>(x => x.Posts, true))
-    Map.Entity<Post>()
-        .ParentColumn("ForumId")
-        .Map(new ValuePropertyMap<Post, string>(x => x.Title))
-        .Map(new ValuePropertyMap<Post, string>(x => x.Body))
-        .Map(new BelongsToPropertyMap<Post, Person>(x => x.Poster, "PosterId"))
-);
-}}}
-
-==Mono.Data.Sqlite==
-
-Passing an instance of !SqliteAdapter into the !SessionFactory tells Catnap to find System.Data.Sqlite.dll in the bin folder.  If you are using Mono.Data.Sqlite.dll you must to pass the connection type into the adapter, like so:
-
-{{{
-SessionFactory.Initialize("Data source=MyDatabase.sqlite", new SqliteAdapter(typeof(SqliteConnection));
-}}}
-
-This is required because Mono (or at least !MonoTouch) encounters an error trying to dynamically load a type at runtime.
+There are some [UsingCatnapWithMonoTouch special considerations for using Catnap with MonoTouch].
 
 = IEntity Interface =
 
