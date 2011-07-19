@@ -11,7 +11,7 @@
  * Repository`<T>` base class implements basic persistence operations
  * Simple ICriteria API to build complex find queries
  * Create any kind of parameterized raw SQL query in code
- * Use Linq predicates for find queries and to filter collections (very limited at present)
+ * Use Linq predicates to create find queries and to filter collections (very limited at present)
  * Database migration utility. Provides automatic deployment of database changes based on migrations that you write (forward only)
  * Uses ADO.NET API.  Currently implemented for Sqlite.  Tested with:
    * System.Data.Sqlite
