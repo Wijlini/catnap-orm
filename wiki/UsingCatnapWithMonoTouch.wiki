@@ -2,7 +2,7 @@
 
 == Alternate Mapping Syntax ==
 
-Because of a [http://bugzilla.novell.com/show_bug.cgi?id=551623 bug in MonoTouch], the mapping syntax shown in the configuration [Introduction] does not work on the IPhone device.  Fortunately, there is a workaround.  It's a little more verbose, but it works.  The following example is functionally equivalent to the example in the [Introduction].
+Because of a [http://bugzilla.novell.com/show_bug.cgi?id=551623 bug in MonoTouch], the mapping syntax shown in the configuration example in the [Introduction] does not work on the IPhone device.  Fortunately, there is a workaround.  It's a little more verbose, but it works.  The following example is functionally equivalent to the example in the [Introduction].
 
 {{{
 Domain.Configure
