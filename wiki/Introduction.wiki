@@ -18,7 +18,7 @@
  * Database migration utility
    * Automatically deploy database changes based on migrations that you write (forward only)
    * Very useful for embedded database scenarios
- * Very lightweight (currently well under 100k)
+ * Very lightweight (currently about 50k)
 
 = Configuration =
 
