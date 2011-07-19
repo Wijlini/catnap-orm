@@ -47,7 +47,7 @@ using (UnitOfWork.Start())
 }
 }}}
 
-Notice that you do not have to map the Id property.  All other persisted properties must be mapped and must have both a getter and a setter.  The getters and setters can be either public or non-public.
+Notice that you do not have to map the Id property.  All other persisted properties must be mapped and must have both a getter and a setter.  The getters and setters _do not_ have to be public.
 
 == Alternate Mapping Syntax ==
 
