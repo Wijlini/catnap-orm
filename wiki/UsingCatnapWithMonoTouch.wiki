@@ -1,0 +1,33 @@
+=Using Catnap With !MonoTouch=
+
+== Alternate Mapping Syntax ==
+
+Because of a [http://bugzilla.novell.com/show_bug.cgi?id=551623 bug in MonoTouch], the mapping syntax shown in the [Introduction] does not work on the IPhone device.  Fortunately, there is a workaround.  It's a little more verbose, but it works.  The following example is functionally equivalent to the example in the [Introduction].
+
+{{{
+Domain.Configure
+(
+    Map.Entity<Person>()
+        .Table("Users")
+        .Map(new ValuePropertyMap<Person, string>(x => x.FirstName))
+        .Map(new ValuePropertyMap<Person, string>(x => x.LastName)),
+    Map.Entity<Forum>()
+        .Map(new ValuePropertyMap<Forum, string>(x => x.Name)),
+        .Map(new ListPropertyMap<Forum, Post>(x => x.Posts, true))
+    Map.Entity<Post>()
+        .ParentColumn("ForumId")
+        .Map(new ValuePropertyMap<Post, string>(x => x.Title))
+        .Map(new ValuePropertyMap<Post, string>(x => x.Body))
+        .Map(new BelongsToPropertyMap<Post, Person>(x => x.Poster, "PosterId"))
+);
+}}}
+
+==Mono.Data.Sqlite==
+
+In [Introduction] example, we pass a !SqliteAdapter into the !SessionFactory.  Among other things, this tells Catnap to find System.Data.Sqlite.dll in the bin folder.  If you are using Mono.Data.Sqlite.dll you must also pass the connection type into the adapter, like so:
+
+{{{
+SessionFactory.Initialize("Data source=MyDatabase.sqlite", new SqliteAdapter(typeof(SqliteConnection));
+}}}
+
+Couldn't we just add !MonoSqliteAdapter to Catnap?  We could but it won't work on !MonoTouch.  !MonoTouch, it seems, is not quite able to dynamically load a type at runtime.  It throws a !TypeLoadException.
