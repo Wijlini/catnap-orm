@@ -6,7 +6,7 @@
    * One to many associations (collections):
      * loading - automatically load collections, lazily or eagerly, as specified per collection
      * cascading - automatically save/update/delete changes to collections, as specified per collection
-     * filtering - criteria can be specified per collection to selectively load items
+     * filtering - selectively load items base on criteria specified per collection
  * Connection and transaction boundaries controlled via a thread safe Unit Of Work context
  * Repository`<T>` base class implements basic persistence operations
  * Simple ICriteria API for building conditions for find queries
