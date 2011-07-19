@@ -17,8 +17,6 @@
    * Mono.Data.Sqlite
  * Very lightweight (currently well under 100k)
 
-= sqlite3.dll =
-
 = Configuration =
 
 Startup might look something like this:
