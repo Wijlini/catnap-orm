@@ -3,8 +3,8 @@
  * Fluent mapping
  * Mapped entities inherit from IEntity interface
  * Mapped collections:
-   * loading - lazy or eager, specified per collection
-   * cascading - automatically saves/updates and/or deletes, specified per collection
+   * loading - automatically load collections, lazily or eagerly, as specified per collection
+   * cascading - automatically save/update/delete changes to collections, as specified per collection
    * filtering - criteria can be specified per collection
  * Connection and transaction boundaries controlled via a basic !UnitOfWork context
  * Repository`<T>` base class implements basic persistence operations
