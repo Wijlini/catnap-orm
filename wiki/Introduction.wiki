@@ -12,12 +12,12 @@
  * !DbCommandSpec provides a means to create any kind of parameterized query (similar to IDbCommand)
  * Support for Linq predicates for finding and filtering collections (very limited at present)
  * Database migration utility. Provides automatic deployment of database changes based on migrations that you write (forward only)
- * No dependencies except sqlite3.dll
+ * Uses ADO.NET providers.  Currently implemented for Sqlite.  Tested with
+   * System.Data.Sqlite
+   * Mono.Data.Sqlite
  * Very lightweight (currently well under 100k)
 
 = sqlite3.dll =
-
-The sqlite3.dll COM assembly must be in your application directory.
 
 = Configuration =
 
