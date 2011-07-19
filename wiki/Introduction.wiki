@@ -2,7 +2,8 @@
 
  * Fluent mapping
    * Entities
-   * Mapped collections:
+   * Many to one (belongs to) associations
+   * One to many associations (collections):
      * loading - automatically load collections, lazily or eagerly, as specified per collection
      * cascading - automatically save/update/delete changes to collections, as specified per collection
      * filtering - criteria can be specified per collection to selectively load items
