@@ -9,7 +9,7 @@
  * Connection and transaction boundaries controlled via a basic !UnitOfWork context
  * Repository`<T>` base class implements basic persistence operations
  * Simple ICriteria API for building conditions for find queries
- * !DbCommandSpec provides a means to create any kind of parameterized query (similar to IDbCommand)
+ * Create any kind of parameterized query in code
  * Support for Linq predicates for finding and filtering collections (very limited at present)
  * Database migration utility. Provides automatic deployment of database changes based on migrations that you write (forward only)
  * Uses ADO.NET providers.  Currently implemented for Sqlite.  Tested with
