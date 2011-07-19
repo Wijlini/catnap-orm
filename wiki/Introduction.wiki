@@ -68,7 +68,7 @@ Domain.Configure
 );
 }}}
 
-=Mono.Data.Sqlite=
+==Mono.Data.Sqlite==
 
 Using !SqliteAdapter with no constructor parameters tells Catnap to find for System.Data.Sqlite in the bin folder.  If you are using Mono.Data.Sqlite you needs to pass the connection type into the adapter, like so:
 
