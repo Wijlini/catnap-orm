@@ -70,7 +70,7 @@ Domain.Configure
 
 ==Mono.Data.Sqlite==
 
-!SqliteAdapter tells Catnap to find System.Data.Sqlite.dll in the bin folder.  If you are using Mono.Data.Sqlite.dll you must to pass the connection type into the adapter, like so:
+Passing an instance of !SqliteAdapter into the !SessionFactory tells Catnap to find System.Data.Sqlite.dll in the bin folder.  If you are using Mono.Data.Sqlite.dll you must to pass the connection type into the adapter, like so:
 
 {{{
 SessionFactory.Initialize("Data source=MyDatabase.sqlite", new SqliteAdapter(typeof(SqliteConnection));
